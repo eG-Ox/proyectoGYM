@@ -30,3 +30,26 @@ class Clase:
         self.fecha: date = fecha
         self.hora: time = hora
         self.inscritos: List[Any] = []
+        
+    def tiene_cupo(self) -> bool:
+        return len(self.inscritos) < self.cupo_maximo
+
+    def inscribir(self, socio: Any) -> None:
+        if not self.tiene_cupo():
+            raise ValueError("La clase está llena.")
+        if socio in self.inscritos:
+            return
+        self.inscritos.append(socio)
+
+    def quitar(self, socio: Any) -> None:
+        if socio in self.inscritos:
+            self.inscritos.remove(socio)
+
+    def es_de_fecha(self, fecha_referencia: date) -> bool:
+        return self.fecha == fecha_referencia
+
+    def __repr__(self) -> str:
+        return (
+            f"<Clase {self.id}: {self.nombre} {self.fecha} {self.hora}, "
+            f"inscritos={len(self.inscritos)}/{self.cupo_maximo}>"
+        )
